@@ -12,7 +12,7 @@ To run the project locally, you must install and run AnyCable server:
 
 ```sh
 npm install @anycable/anycable-go
-npx anycable-go --public
+npx anycable-go --public --presets=broker
 ```
 
 **NOTE**: Using `--public` flag is important for this example (we don't have any authentication/authorization logic here).

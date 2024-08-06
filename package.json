@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@anycable/anycable-go": "^1.5.2",
     "@anycable/core": "^0.8.2",
     "@anycable/web": "^0.8.0",
     "@types/node": "20.6.2",
