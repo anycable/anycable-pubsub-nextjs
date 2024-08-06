@@ -4,6 +4,8 @@ A minimal messaging Next.js app demonstrating [AnyCable](https://anycable.io) v1
 
 Learn more in the [documentation](https://docs.anycable.io/edge/anycable-go/signed_streams).
 
+> See this project on [StackBlitz](https://stackblitz.com/edit/anycable-pubsub).
+
 ### Running locally
 
 To run the project locally, you must install and run AnyCable server:
