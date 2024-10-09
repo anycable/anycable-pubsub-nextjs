@@ -1,17 +1,18 @@
 {
   "name": "nextjs",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --port 4000",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "anycable-go": "NODE_NO_WARNINGS=1 NODE_OPTIONS=--experimental-vm-modules npx anycable-go"
   },
   "dependencies": {
-    "@anycable/anycable-go": "^1.5.2",
-    "@anycable/core": "^0.8.2",
-    "@anycable/web": "^0.8.0",
+    "@anycable/anycable-go": "^1.5.4",
+    "@anycable/core": "^0.9.1",
+    "@anycable/web": "^0.9.0",
     "@types/node": "20.6.2",
     "@types/react": "18.2.22",
     "@types/react-dom": "18.2.7",
@@ -24,5 +25,6 @@
     "react-dom": "18.2.0",
     "tailwindcss": "3.3.3",
     "typescript": "5.2.2"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

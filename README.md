@@ -8,11 +8,16 @@ Learn more in the [documentation](https://docs.anycable.io/edge/anycable-go/sign
 
 ### Running locally
 
-To run the project locally, you must install and run AnyCable server:
+To run the project locally, you must first launch AnyCable server:
 
 ```sh
-npm install @anycable/anycable-go
-npx anycable-go --public --presets=broker
+yarn anycable-go
 ```
 
-**NOTE**: Using `--public` flag is important for this example (we don't have any authentication/authorization logic here).
+Now, start the Next.js app:
+
+```sh
+yarn dev
+```
+
+You can open the app in your browser at [http://localhost:4000](http://localhost:4000).
