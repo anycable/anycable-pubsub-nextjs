@@ -10,9 +10,8 @@
     "anycable-go": "NODE_NO_WARNINGS=1 NODE_OPTIONS=--experimental-vm-modules npx anycable-go"
   },
   "dependencies": {
-    "@anycable/anycable-go": "^1.5.4",
-    "@anycable/core": "^0.9.1",
-    "@anycable/web": "^0.9.0",
+    "@anycable/anycable-go": "1.6.0-rc.1",
+    "@anycable/web": "^1.0.0",
     "@types/node": "20.6.2",
     "@types/react": "18.2.22",
     "@types/react-dom": "18.2.7",

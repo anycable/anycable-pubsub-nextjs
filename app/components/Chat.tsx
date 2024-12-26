@@ -8,6 +8,9 @@ import { Message } from '../types';
 import createCable from '../cable';
 import { Channel } from '@anycable/core';
 
+import { PresenceIndicator } from './PresenceIndicator';
+import { TypingSet, TypingIndicator } from './TypingIndicator';
+
 const autoScroll = (container: HTMLElement) => {
   /*
   Marvelous thing: at some point `scrollTop` started to give me… fractional numbers!
@@ -121,92 +124,8 @@ const NewMessageForm = (props: {
   );
 };
 
-class TypingSet {
-  active: Record<string, number>;
-  interval: number = 1000;
-
-  _refresher: (names: string[]) => void;
-  _watchId: any;
-
-  constructor(refresh: (names: string[]) => void) {
-    this.active = {};
-    this._refresher = refresh;
-  }
-
-  get names() {
-    return Object.keys(this.active);
-  }
-
-  add(name: string) {
-    this.active[name] = Date.now();
-    this._watch();
-    this._refresher(this.names);
-  }
-
-  remove(name: string) {
-    delete this.active[name];
-
-    if (Object.keys(this.active).length === 0) {
-      this.unwatch();
-    }
-
-    this._refresher(this.names);
-  }
-
-  unwatch() {
-    if (this._watchId) {
-      clearInterval(this._watchId);
-      delete this._watchId;
-    }
-  }
-
-  _watch() {
-    if (this._watchId) return;
-
-    this._watchId = setInterval(() => {
-      let now = Date.now();
-      let needsRefresh = false;
-
-      for (let name of Object.keys(this.active)) {
-        let deadline = this.active[name] + this.interval;
-
-        console.log(this.active, this.interval, name, deadline, now);
-        if (deadline < now) {
-          delete this.active[name];
-          needsRefresh = true;
-        }
-      }
-
-      if (Object.keys(this.active).length === 0) {
-        this.unwatch();
-      }
-
-      if (needsRefresh) {
-        this._refresher(this.names);
-      }
-    }, this.interval);
-  }
-}
-
-const TypingIndicator = (props: { names: Array<string> }) => {
-  let names = props.names;
-
-  if (names.length === 0) return null;
-
-  let prefix;
-
-  if (names.length > 1) {
-    prefix = `${names.length} folks are`;
-  } else {
-    prefix = `${names[0]} is`;
-  }
-
-  return (
-    <div className="px-2 text-xs text-gray-400">{`${prefix} typing...`}</div>
-  );
-};
-
 export function Chat({ username }: { username: string }) {
+  const [connected, setConnected] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [typings, setTypings] = useState<string[]>([]);
 
@@ -226,6 +145,8 @@ export function Chat({ username }: { username: string }) {
   useEffect(() => {
     let channel = cable.streamFrom('stackblitz-demo');
     channelRef.current.channel = channel;
+
+    channel.on('connect', () => setConnected(true));
 
     channel.on('message', (payload: any) => {
       console.log('New message:', payload);
@@ -249,10 +170,11 @@ export function Chat({ username }: { username: string }) {
     return () => {
       channel.disconnect();
     };
-  }, [cable]);
+  }, [cable, typingSet]);
 
   return (
     <div className="relative flex min-h-screen w-full flex-col gap-3">
+      <PresenceIndicator username={username} channel={channelRef.current.channel} />
       <div className="flex-1">
         <MessageList messages={messages} user={username} />
       </div>

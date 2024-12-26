@@ -26,6 +26,7 @@ adapter = "memory"
 history_ttl = 300
 history_limit = 100
 sessions_ttl = 300
+presence_ttl = 3
 
 [rpc]
 implementation = "none"
